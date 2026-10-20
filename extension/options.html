@@ -3,26 +3,24 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Nikki New Tab — Settings</title>
+<title>Nikki New Tab Settings</title>
 <style>
-:root{color-scheme:dark;background:#140d19;color:#fff;font-family:system-ui,Segoe UI,sans-serif}
-body{max-width:720px;margin:36px auto;padding:0 18px}h1{color:#ff8ed2}section{background:#25172d;border:1px solid #70456b;border-radius:16px;padding:20px}
-label{display:block;font-weight:700;margin:18px 0 6px}input{width:100%;padding:12px;border-radius:9px;border:1px solid #8d5a85;background:#100b14;color:white;font:inherit}input[type=range]{padding:0}button{margin-top:18px;padding:11px 16px;border:1px solid #ff8ed2;border-radius:9px;background:#a62f79;color:white;font-weight:700;cursor:pointer;font:inherit}p,small{color:#d9c5d9}#status{min-height:1.5em;color:#ffce7d}
+body{max-width:560px;margin:32px auto;padding:0 16px;background:#111;color:#eee;font:16px system-ui}
+label{display:block;margin:20px 0 6px}input{box-sizing:border-box;width:100%;padding:9px;background:#222;color:white;border:1px solid #777;border-radius:4px;font:inherit}
+button{margin:18px 8px 0 0;padding:9px 14px;background:#333;color:white;border:1px solid #888;border-radius:4px;font:inherit;cursor:pointer}#status{min-height:1.5em}
 </style>
 </head>
 <body>
-<h1>Nikki New Tab — Settings</h1>
-<section>
+<h1>Nikki New Tab</h1>
+<label for="chance">Chance the image appears (0–100%)</label>
+<input id="chance" type="number" min="0" max="100" step="1" value="50">
 <label for="imageUrl">Image URL</label>
-<input id="imageUrl" type="url" spellcheck="false" placeholder="https://example.com/image.jpg">
-<label for="percent">Image size: <span id="percentLabel">90%</span></label>
-<input id="percent" type="range" min="10" max="100" step="5" value="90">
-<p>The percentage controls the image's width and height relative to the available new-tab area. The image keeps its aspect ratio and is never stretched.</p>
-<button id="save" type="button">Save settings</button>
-<button id="reset" type="button">Restore defaults</button>
+<input id="imageUrl" type="url" spellcheck="false">
+<label for="fallbackUrl">Page to open when the image does not appear</label>
+<input id="fallbackUrl" type="url" spellcheck="false" placeholder="https://www.google.com/">
+<button id="save" type="button">Save</button><button id="reset" type="button">Reset defaults</button>
 <p id="status" role="status" aria-live="polite"></p>
-</section>
-<p>The extension replaces the browser's New Tab page. It does not change existing websites or force browser-wide fullscreen. Use the visible button if you want fullscreen, and press Escape to exit or hide the image.</p>
+<p>Edge extensions cannot restore the built-in edge://newtab page after replacing it. Set the fallback to the website you normally use as your start page.</p>
 <script src="options.js"></script>
 </body>
 </html>
