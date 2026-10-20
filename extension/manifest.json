@@ -1,0 +1,11 @@
+{
+  "manifest_version": 3,
+  "name": "Nikki New Tab",
+  "version": "1.0.0",
+  "description": "Show a configurable image on your new-tab page.",
+  "chrome_url_overrides": {
+    "newtab": "newtab.html"
+  },
+  "permissions": ["storage"],
+  "options_page": "options.html"
+}
