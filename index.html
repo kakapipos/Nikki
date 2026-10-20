@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#140b1b">
+<meta name="description" content="A personal, user-controlled devotion-themed image PWA.">
+<link rel="manifest" href="./manifest.json">
+<title>Nikki — Devotion Console</title>
+<style>
+:root{color-scheme:dark;--bg:#140b1b;--panel:#24152c;--pink:#ff75c8;--gold:#f5ce75;--text:#fff5fc}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#462244,var(--bg) 70%);color:var(--text);font:16px/1.5 system-ui,Segoe UI,sans-serif;min-height:100vh}
+header{text-align:center;padding:28px 14px 12px}h1{font-size:clamp(1.8rem,5vw,3.3rem);line-height:1.1;margin:0;color:var(--pink);text-shadow:0 0 24px #ff75c866}header p{color:#e6cce2;margin:10px 0}
+main{width:min(1120px,94vw);margin:auto;padding:10px 0 46px}.panel{background:#24152cf2;border:1px solid #75436f;border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 12px 35px #0005}
+h2{margin:0 0 8px;color:var(--gold);font-size:1.25rem}.actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:14px}
+button,select{border:1px solid #a65391;border-radius:12px;padding:11px 14px;background:#38213f;color:white;font:inherit}button{cursor:pointer;font-weight:750}button:hover{background:#593052}button.primary{background:#a62f79;border-color:#ff9bd7}button.danger{background:#632a37;border-color:#d66a86}button:focus-visible,select:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.small{font-size:.9rem;color:#d7bfd2}.status{min-height:1.5em;color:var(--gold);padding:4px 2px}
+#gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:12px;margin-top:16px}.tile{background:#100b14;border:1px solid #70456b;border-radius:12px;padding:8px;min-width:0}.tile img{width:100%;height:190px;object-fit:contain;background:#09060b;border-radius:8px}.tile p{font-size:.8rem;text-align:center;margin:5px 0 0}
+#hero{display:none;position:fixed;inset:0;z-index:10;background:#08050b;align-items:center;justify-content:center;flex-direction:column;padding:18px;text-align:center}#hero img{max-width:90vw;max-height:68vh;object-fit:contain;border-radius:12px;box-shadow:0 0 35px #ff69b455}#hero h2{font-size:clamp(1.7rem,5vw,3.5rem);margin:12px;color:var(--pink)}#hero .actions{justify-content:center}
+#slideshow{display:none;text-align:center;margin-top:18px}#slideshow img{max-width:min(100%,620px);max-height:52vh;object-fit:contain;border-radius:12px}#slideCaption{font-size:clamp(1.2rem,3vw,2rem)}
+footer{text-align:center;color:#ad91aa;padding:8px 16px 24px}a{color:#ffb2e0}
+</style>
+</head>
+<body>
+<header><h1>GODDESS NIKKI</h1><p>FOOT SLAVE CONTROL CONSOLE</p></header>
+<main>
+<section class="panel">
+<h2>Payload 1 — Fullscreen Devotion</h2>
+<p>Enter fullscreen with the image and declaration. Press Esc or use the return button to exit.</p>
+<div class="actions"><button class="primary" id="goFullscreen">TAKE OVER THE SCREEN</button></div>
+</section>
+<section class="panel">
+<h2>Payload 2 — Image Explosion</h2>
+<p>Fill the page with multiple copies of the image. This stays inside the PWA, so pop-up blocking won't get in the way.</p>
+<div class="actions"><label for="count">Copies:</label><select id="count"><option>4</option><option selected>8</option><option>12</option><option>16</option><option>24</option></select><button class="primary" id="explode">RELEASE THE FEET</button><button id="clear">Clear images</button></div>
+<div id="gallery" aria-live="polite"></div>
+</section>
+<section class="panel">
+<h2>Payload 3 — Devotion Slideshow</h2>
+<p>Rotate the image and captions. It only runs while this app is open and stops when requested.</p>
+<div class="actions"><button class="primary" id="startSlide">BEGIN DEVOTION</button><button id="stopSlide">Stop slideshow</button></div>
+<div id="slideshow"><h2 id="slideCaption">Your devotion is noted.</h2><img src="https://img.coomer.st/thumbnail/data/7f/a6/7fa6d689d69a33c21968f2ab00c198d3ee9ff3d506ac058947ce1dcf983972d3.jpg" alt="Goddess Nikki"><p id="slideCount"></p></div>
+</section>
+<section class="panel">
+<h2>Payload 4 — Windows Notifications</h2>
+<p>Request notification permission and send three desktop notifications. Edge must allow notifications for this site; Windows notification settings must also permit them.</p>
+<div class="actions"><button class="primary" id="notify">SEND 3 WINDOWS NOTIFICATIONS</button></div>
+<p class="small">Notifications are sent only after you press the button and grant permission. No background push server is configured.</p>
+</section>
+<section class="panel">
+<h2>Emergency Reset</h2>
+<p>Stop the slideshow, clear image copies, close fullscreen mode, and stop any pending notification sequence.</p>
+<div class="actions"><button class="danger" id="reset">EMERGENCY STOP / RESET</button></div>
+<p class="small">Nothing is added to Windows startup, and the app does not force itself open or reopen.</p>
+</section>
+<div class="status" id="status" role="status" aria-live="polite"></div>
+</main>
+<div id="hero"><img src="https://img.coomer.st/thumbnail/data/7f/a6/7fa6d689d69a33c21968f2ab00c198d3ee9ff3d506ac058947ce1dcf983972d3.jpg" alt="Goddess Nikki"><h2>I AM GODDESS NIKKI'S FOOT SLAVE</h2><div class="actions"><button id="exitHero">Return to control panel</button></div></div>
+<footer>Personal, user-triggered effects. Close the app or use Emergency Reset at any time.</footer>
+<script>
+const IMAGE="https://img.coomer.st/thumbnail/data/7f/a6/7fa6d689d69a33c21968f2ab00c198d3ee9ff3d506ac058947ce1dcf983972d3.jpg";
+const gallery=document.getElementById('gallery'), statusBox=document.getElementById('status');
+const hero=document.getElementById('hero'), slideshow=document.getElementById('slideshow');
+const captions=["I AM GODDESS NIKKI'S FOOT SLAVE","ALL HAIL THE QUEEN","DEVOTION MODE: ACTIVATED","I HAVE ACCEPTED MY PLACE"];
+let slideTimer=null, slideIndex=0, notifyTimers=[];
+function say(s){statusBox.textContent=s}
+function stopSlide(){if(slideTimer!==null)clearInterval(slideTimer);slideTimer=null;slideshow.style.display='none'}
+function leaveFullscreen(){if(document.fullscreenElement&&document.exitFullscreen)document.exitFullscreen().catch(()=>{});hero.style.display='none'}
+function clearGallery(){gallery.replaceChildren()}
+function cancelNotifications(){notifyTimers.forEach(clearTimeout);notifyTimers=[]}
+document.getElementById('goFullscreen').addEventListener('click',async()=>{hero.style.display='flex';try{if(document.documentElement.requestFullscreen)await document.documentElement.requestFullscreen()}catch(e){}say('Fullscreen devotion activated. Esc or Return exits.')});
+document.getElementById('exitHero').addEventListener('click',leaveFullscreen);
+document.addEventListener('keydown',e=>{if(e.key==='Escape')leaveFullscreen()});
+document.getElementById('explode').addEventListener('click',()=>{
+ const n=Math.min(24,Math.max(1,Number(document.getElementById('count').value)||8)),frag=document.createDocumentFragment();clearGallery();
+ for(let i=1;i<=n;i++){const tile=document.createElement('div');tile.className='tile';const img=document.createElement('img');img.src=IMAGE;img.alt='Image copy '+i;img.loading='lazy';const label=document.createElement('p');label.textContent='DEVOTION COPY #'+i;tile.append(img,label);frag.append(tile)}
+ gallery.append(frag);say('Displayed '+n+' image copies. Internet access is required to load the remote image.');
+});
+document.getElementById('clear').addEventListener('click',()=>{clearGallery();say('Image copies cleared.')});
+document.getElementById('startSlide').addEventListener('click',()=>{
+ stopSlide();slideshow.style.display='block';slideIndex=0;
+ const update=()=>{document.getElementById('slideCaption').textContent=captions[slideIndex%captions.length];document.getElementById('slideCount').textContent='DEVOTION FRAME '+(slideIndex+1);slideIndex++};
+ update();slideTimer=setInterval(update,2500);say('Slideshow running. Press Stop to end it.');
+});
+document.getElementById('stopSlide').addEventListener('click',()=>{stopSlide();say('Slideshow stopped.')});
+document.getElementById('notify').addEventListener('click',async()=>{
+ cancelNotifications();
+ if(!('Notification' in window)){say('This browser does not support desktop notifications.');return}
+ let permission=Notification.permission;
+ if(permission==='default'){try{permission=await Notification.requestPermission()}catch(e){permission='denied'}}
+ if(permission!=='granted'){say('Notifications were not permitted. Enable them for this site in Edge settings and try again.');return}
+ const registration=('serviceWorker' in navigator)?await navigator.serviceWorker.ready.catch(()=>null):null;
+ const messages=[
+  ["GODDESS NIKKI","Your devotion console is ready."],
+  ["FOOT SLAVE STATUS","Devotion mode remains active."],
+  ["ALL HAIL THE QUEEN","Return to the Nikki console when ready."]
+ ];
+ messages.forEach((m,i)=>notifyTimers.push(setTimeout(async()=>{
+  try{if(registration&&registration.showNotification)await registration.showNotification(m[0],{body:m[1],icon:'./icon-192.png',badge:'./icon-192.png',tag:'nikki-'+i,renotify:true});else new Notification(m[0],{body:m[1],icon:'./icon-192.png'})}catch(e){}
+ },i*1800)));
+ say('Three notifications queued. Windows/Edge may group or suppress them depending on notification settings.');
+});
+document.getElementById('reset').addEventListener('click',()=>{stopSlide();clearGallery();leaveFullscreen();cancelNotifications();say('Emergency reset complete.')});
+if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').then(()=>say('App ready. Service worker registered.')).catch(()=>say('App ready, but offline caching could not be enabled.')))}
+</script>
+</body>
+</html>
